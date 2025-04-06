@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    Searching on the tags in deliver order should be possible.-->
+    <record id="view_picking_search" model="ir.ui.view">
+        <field name="name">stock.picking.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="sale_order_tags"  string="Sale Order Tags" />
+            </xpath>
+        </field>
+    </record>
+
+<!--    Visibility of the tags field in delivery order List view should be optional and form view it should be visible only if it has any value.-->
+    <record id="view_picking_inherit_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sale_order_tags" string="Sale Order Tags" widget="many2many_tags" invisible="context.get('sale_order_tags', False)"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_edi_tree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="name">stock.picking.edi.tree</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sale_order_tags" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

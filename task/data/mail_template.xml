@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="email_template_delivery_done_salesperson" model="mail.template">
+            <field name="name">Notify Salesperson on Delivery Done</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">{{ object.company_id.email }}</field>
+            <field name="email_to">{{object.user_id.partner_id.email}}</field>
+            <field name="subject">Delivery Completed for ${object.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                        <h2>
+                            Hi,
+                            <t t-out="object.user_id.partner_id.name"/>
+                        </h2>
+                        <div>
+                            <h3>
+                                This is mail for delivery is done in which order you are the sales person..
+                            </h3>
+                        </div>
+                    <br/>
+                    <br/>
+                    Thanks and Regards,
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

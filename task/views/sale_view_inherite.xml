@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <!-- Inherit the search view and replace filter -->
+        <record id="view_order_filter_inherit_sales_orders" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.replace_my_quotations</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='my_quotation']" position="replace">
+                    <filter
+                        name="confirmed_done"
+                        string="Sales Orders"
+                        domain="[('state', 'in', ('sale', 'done'))]"
+                        context="{'search_default_confirmed_done': 1}"
+                    />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Add new filter by default -->
+        <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="context">{'search_default_confirmed_done': 1}</field>
+        </record>
+
+    </data>
+</odoo>
